@@ -61,7 +61,8 @@ public class UserEntity implements Serializable {
 	//TODO ??? JAK SPECIFIKOVAT EAGER STRATEGY POMOCI LEFT JOIN FETCH???
 	private Set<BookEntity> books;
 
-	@OneToMany(fetch=FetchType.LAZY, targetEntity = cz.morosystems.phase5.entity.AccountEntity.class, cascade = { CascadeType.ALL})
+	//TODO ??? Jak nakonfigurovat LAZY LOADING ??? Zatim pouzit EAGER
+	@OneToMany(fetch=FetchType.EAGER, targetEntity = cz.morosystems.phase5.entity.AccountEntity.class, cascade = { CascadeType.ALL})
 	@JoinTable(name = "USER_ACCOUNTS_TABLE", joinColumns = @JoinColumn(name = "USERID") , inverseJoinColumns = @JoinColumn(name = "ACCOUNTID") )
 	private Set<AccountEntity> accounts;
 
@@ -88,6 +89,10 @@ public class UserEntity implements Serializable {
 	public Set<BookEntity> getBooks() {
 		return books;
 	}
+	
+	public Set<AccountEntity> getAccounts() {
+		return accounts;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -111,5 +116,9 @@ public class UserEntity implements Serializable {
 
 	public void setBooks(Set<BookEntity> books) {
 		this.books = books;
+	}
+	
+	public void setAccounts(Set<AccountEntity> accounts) {
+		this.accounts = accounts;
 	}
 }

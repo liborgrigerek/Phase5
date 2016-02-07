@@ -2,7 +2,9 @@ package cz.morosystems.phase5.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +21,9 @@ public class UserDaoImpl implements UserDAO  {
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<UserEntity> getAllUsers() {
-		return this.sessionFactory.getCurrentSession().createQuery("from UserEntity").list();
+		return this.sessionFactory.getCurrentSession().createCriteria(UserEntity.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).addOrder(Order.asc("id")).list();
 	}
+	
 	@Transactional
 	public UserEntity getUser(Integer id) {
 		UserEntity user = (UserEntity) this.sessionFactory.getCurrentSession().createQuery("from UserEntity user where user.id = :id").setParameter("id", id).uniqueResult();

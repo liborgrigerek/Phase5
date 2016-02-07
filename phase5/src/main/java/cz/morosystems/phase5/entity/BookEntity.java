@@ -22,9 +22,6 @@ public class BookEntity {
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name="USERID")
-	private Integer userId;
 
 	@Pattern(regexp = "[a-zA-Z0-9 ]+", message = "Title can not be empty and can have alphanumerical characters only.")
 	@Column(name = "TITLE")
@@ -41,10 +38,6 @@ public class BookEntity {
 		return id;
 	}
 
-	public Integer getUserId() {
-		return userId;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -59,10 +52,6 @@ public class BookEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public void setTitle(String title) {
