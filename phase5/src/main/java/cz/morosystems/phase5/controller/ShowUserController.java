@@ -41,15 +41,10 @@ public class ShowUserController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET, params = { "id" })
 	public String showUser(@RequestParam("id") int id, Model model) {
-		UserEntity user = userManager.getUser(id);
+		UserEntity user = userManager.getUserWithLinks(id);
 		if (user == null) {
 			throw new UserNotFoundException(id);
 		}
-		
-		// TODO tady toto bylo pridano jako podpora pro LAZY
-		//if(user!=null){
-        //    Hibernate.initialize(user.getAccounts());
-        //}
 		
 		Set<BookEntity> books = user.getBooks();
 		Set<AccountEntity> accounts = user.getAccounts();

@@ -54,15 +54,13 @@ public class UserEntity implements Serializable {
 	@Pattern(regexp = "[+]?[0-9]+", message = "Telephone does not have correct format. Please enter the numbers without spaces.")
 	@Column(name = "TELEPHONE")
 	private String telephone;
-
+	
 	@ManyToMany(fetch=FetchType.EAGER, targetEntity = cz.morosystems.phase5.entity.BookEntity.class, cascade = { CascadeType.ALL })
 	// definice spojeni - tabulka user_book_table musi existovat a obsahuje primarni klice obou tabulek - viz. definice tabulek v readme-db.txt
 	@JoinTable(name = "USERS_BOOKS_TABLE", joinColumns = @JoinColumn(name = "USERID") , inverseJoinColumns = @JoinColumn(name = "BOOKID") )
-	//TODO ??? JAK SPECIFIKOVAT EAGER STRATEGY POMOCI LEFT JOIN FETCH???
 	private Set<BookEntity> books;
 
-	//TODO ??? Jak nakonfigurovat LAZY LOADING ??? Zatim pouzit EAGER
-	@OneToMany(fetch=FetchType.EAGER, targetEntity = cz.morosystems.phase5.entity.AccountEntity.class, cascade = { CascadeType.ALL})
+	@OneToMany(fetch=FetchType.LAZY, targetEntity = cz.morosystems.phase5.entity.AccountEntity.class, cascade = { CascadeType.ALL})
 	@JoinTable(name = "USER_ACCOUNTS_TABLE", joinColumns = @JoinColumn(name = "USERID") , inverseJoinColumns = @JoinColumn(name = "ACCOUNTID") )
 	private Set<AccountEntity> accounts;
 
